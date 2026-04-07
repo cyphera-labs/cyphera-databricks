@@ -22,12 +22,12 @@ PUT 'target/cyphera-databricks-0.1.0.jar' INTO '/Volumes/catalog/schema/jars/';
 
 ```python
 # In a Databricks notebook
-spark._jvm.dev.cyphera.databricks.CypheraRegistrar.registerAll(spark._jsparkSession)
+spark._jvm.io.cyphera.databricks.CypheraRegistrar.registerAll(spark._jsparkSession)
 ```
 
 Or in Scala:
 ```scala
-dev.cyphera.databricks.CypheraRegistrar.registerAll(spark)
+io.cyphera.databricks.CypheraRegistrar.registerAll(spark)
 ```
 
 ## Usage

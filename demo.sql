@@ -2,11 +2,11 @@
 -- Prerequisites:
 --   1. Upload cyphera-databricks-0.1.0.jar to a Unity Catalog volume or cluster library
 --   2. Register UDFs (via notebook or init script):
---      spark.udf().register("cyphera_protect", new dev.cyphera.databricks.CypheraUDF.Protect(), StringType)
+--      spark.udf().register("cyphera_protect", new io.cyphera.databricks.CypheraUDF.Protect(), StringType)
 --
 -- Or use the registrar in a notebook cell:
 --   %scala
---   dev.cyphera.databricks.CypheraRegistrar.registerAll(spark)
+--   io.cyphera.databricks.CypheraRegistrar.registerAll(spark)
 
 -- Policy-based encryption
 SELECT cyphera_protect('ssn', '123-45-6789') AS encrypted_ssn;
