@@ -36,6 +36,6 @@ io.cyphera.databricks.CypheraRegistrar.registerAll(spark)
 SELECT cyphera_protect('ssn', '123-45-6789');
 -- Returns format-preserved encrypted SSN like '890-12-3456'
 
-SELECT cyphera_unprotect('ssn', cyphera_protect('ssn', '123-45-6789'));
+SELECT cyphera_access('ssn', cyphera_protect('ssn', '123-45-6789'));
 -- Returns '123-45-6789'
 ```

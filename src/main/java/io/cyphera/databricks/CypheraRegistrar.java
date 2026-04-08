@@ -10,6 +10,6 @@ public final class CypheraRegistrar {
     public static void registerAll(SparkSession spark) {
         spark.udf().register("cyphera_protect", new CypheraUDF.Protect(), DataTypes.StringType);
         spark.udf().register("cyphera_access", new CypheraUDF.Access(), DataTypes.StringType);
-        spark.udf().register("cyphera_unprotect", new CypheraUDF.Unprotect(), DataTypes.StringType);
+        spark.udf().register("cyphera_access", new CypheraUDF.Access(), DataTypes.StringType);
     }
 }

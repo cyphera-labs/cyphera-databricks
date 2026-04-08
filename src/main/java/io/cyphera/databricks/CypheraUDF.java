@@ -24,8 +24,8 @@ public final class CypheraUDF {
         }
     }
 
-    /** UDF1: cyphera_unprotect(protectedValue) -> clearValue (tag-based) */
-    public static class Unprotect implements UDF1<String, String> {
+    /** UDF1: cyphera_access(protectedValue) -> clearValue (tag-based) */
+    public static class Access implements UDF1<String, String> {
         @Override
         public String call(String protectedValue) {
             return CypheraLoader.getInstance().access(protectedValue);
