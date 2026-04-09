@@ -1,22 +1,24 @@
 -- Cyphera Databricks UDF Demo
 -- Prerequisites:
 --   1. Upload cyphera-databricks-0.1.0.jar to a Unity Catalog volume or cluster library
---   2. Register UDFs (via notebook or init script):
---      spark.udf().register("cyphera_protect", new io.cyphera.databricks.CypheraUDF.Protect(), StringType)
---
--- Or use the registrar in a notebook cell:
---   %scala
---   io.cyphera.databricks.CypheraRegistrar.registerAll(spark)
+--   2. Register UDFs via notebook:
+--      %scala
+--      io.cyphera.databricks.CypheraRegistrar.registerAll(spark)
 
--- Policy-based encryption
-SELECT cyphera_protect('ssn', '123-45-6789') AS encrypted_ssn;
-SELECT cyphera_access('ssn', cyphera_protect('ssn', '123-45-6789')) AS decrypted_ssn;
+-- Protect with a named policy (output is tagged)
+SELECT cyphera_protect('ssn', '123-45-6789') AS protected_ssn;
+
+-- Access — tag tells Cyphera which policy to use, no policy name needed
+SELECT cyphera_access_tag(cyphera_protect('ssn', '123-45-6789')) AS accessed_ssn;
+
+-- Access with explicit policy name (for untagged values)
+SELECT cyphera_access('ssn', cyphera_protect('ssn', '123-45-6789')) AS accessed_ssn;
 
 -- Round-trip proof
 SELECT
     '123-45-6789' AS original,
-    cyphera_protect('ssn', '123-45-6789') AS encrypted,
-    cyphera_access('ssn', cyphera_protect('ssn', '123-45-6789')) AS decrypted;
+    cyphera_protect('ssn', '123-45-6789') AS protected,
+    cyphera_access_tag(cyphera_protect('ssn', '123-45-6789')) AS accessed;
 
 -- Bulk example
 SELECT

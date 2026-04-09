@@ -33,9 +33,11 @@ io.cyphera.databricks.CypheraRegistrar.registerAll(spark)
 ## Usage
 
 ```sql
+-- Protect with a named policy
 SELECT cyphera_protect('ssn', '123-45-6789');
--- Returns format-preserved encrypted SSN like '890-12-3456'
+-- → 'T01948-37-2150' (tagged, format preserved)
 
-SELECT cyphera_access('ssn', cyphera_protect('ssn', '123-45-6789'));
--- Returns '123-45-6789'
+-- Access — tag tells Cyphera which policy to use, no policy name needed
+SELECT cyphera_access_tag(cyphera_protect('ssn', '123-45-6789'));
+-- → '123-45-6789'
 ```
