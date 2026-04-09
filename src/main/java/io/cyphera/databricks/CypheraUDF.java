@@ -17,7 +17,7 @@ public final class CypheraUDF {
     }
 
     /** UDF2: cyphera_access(policyName, protectedValue) -> clearValue */
-    public static class Access implements UDF2<String, String, String> {
+    public static class AccessWithPolicy implements UDF2<String, String, String> {
         @Override
         public String call(String policyName, String protectedValue) {
             return CypheraLoader.getInstance().access(protectedValue, policyName);
@@ -25,7 +25,7 @@ public final class CypheraUDF {
     }
 
     /** UDF1: cyphera_access(protectedValue) -> clearValue (tag-based) */
-    public static class Access implements UDF1<String, String> {
+    public static class AccessByTag implements UDF1<String, String> {
         @Override
         public String call(String protectedValue) {
             return CypheraLoader.getInstance().access(protectedValue);
