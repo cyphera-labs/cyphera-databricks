@@ -1,6 +1,7 @@
 # cyphera-databricks
 
 [![CI](https://github.com/cyphera-labs/cyphera-databricks/actions/workflows/ci.yml/badge.svg)](https://github.com/cyphera-labs/cyphera-databricks/actions/workflows/ci.yml)
+[![Security](https://github.com/cyphera-labs/cyphera-databricks/actions/workflows/codeql.yml/badge.svg)](https://github.com/cyphera-labs/cyphera-databricks/actions/workflows/codeql.yml)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
 
 Format-preserving encryption for [Databricks](https://www.databricks.com/) — Spark UDF powered by Cyphera.
