@@ -16,11 +16,11 @@ public final class CypheraUDF {
         }
     }
 
-    /** UDF2: cyphera_access(policyName, protectedValue) -> clearValue */
-    public static class AccessWithPolicy implements UDF2<String, String, String> {
+    /** UDF2: cyphera_access(configurationName, protectedValue) -> clearValue */
+    public static class AccessWithConfiguration implements UDF2<String, String, String> {
         @Override
-        public String call(String policyName, String protectedValue) {
-            return CypheraLoader.getInstance().access(protectedValue, policyName);
+        public String call(String configurationName, String protectedValue) {
+            return CypheraLoader.getInstance().access(protectedValue, configurationName);
         }
     }
 
