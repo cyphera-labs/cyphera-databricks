@@ -51,19 +51,19 @@ Or in Scala:
 io.cyphera.databricks.CypheraRegistrar.registerAll(spark)
 ```
 
-### Policy Configuration
+### Configuration
 
-Place `cyphera.json` at `/etc/cyphera/cyphera.json` on the cluster, or set the `CYPHERA_POLICY_FILE` environment variable in the cluster configuration.
+Place `cyphera.json` at `/etc/cyphera/cyphera.json` on the cluster, or set the `CYPHERA_CONFIGURATION_FILE` environment variable in the cluster configuration.
 
 ## Usage
 
 ```sql
--- Protect with a named policy
+-- Protect with a named configuration
 SELECT cyphera_protect('ssn', '123-45-6789');
--- → 'T01i6J-xF-07pX' (tagged, dashes preserved)
+-- → 'T01i6J-xF-07pX' (header-prefixed, dashes preserved)
 
--- Access — tag tells Cyphera which policy to use
-SELECT cyphera_access_tag(cyphera_protect('ssn', '123-45-6789'));
+-- Access — the embedded header tells Cyphera which configuration to use
+SELECT cyphera_access(cyphera_protect('ssn', '123-45-6789'));
 -- → '123-45-6789'
 
 -- Bulk protect
@@ -73,11 +73,11 @@ FROM customers;
 
 ## Operations
 
-### Policy Configuration
+### Configuration
 
-- Policy file: `/etc/cyphera/cyphera.json` or `CYPHERA_POLICY_FILE` env var
+- Configuration file: `/etc/cyphera/cyphera.json` or `CYPHERA_CONFIGURATION_FILE` env var
 - Set env var in Databricks cluster Spark configuration
-- Policy loaded on first UDF call — restart cluster to reload
+- Configuration loaded on first UDF call — restart cluster to reload
 
 ### Monitoring
 
@@ -93,16 +93,16 @@ FROM customers;
 ### Troubleshooting
 
 - **UDF not found** — `CypheraRegistrar.registerAll(spark)` not called, or JAR not attached to cluster
-- **"Unknown policy"** — check that cyphera.json is accessible from the cluster
+- **"Unknown configuration"** — check that cyphera.json is accessible from the cluster
 - **ClassNotFoundException** — JAR not on the classpath, re-upload and restart
 
-## Policy File
+## Configuration File
 
 ```json
 {
-  "policies": {
-    "ssn": { "engine": "ff1", "key_ref": "demo-key", "tag": "T01" },
-    "credit_card": { "engine": "ff1", "key_ref": "demo-key", "tag": "T02" }
+  "configurations": {
+    "ssn": { "engine": "ff1", "key_ref": "demo-key", "header": "T01" },
+    "credit_card": { "engine": "ff1", "key_ref": "demo-key", "header": "T02" }
   },
   "keys": {
     "demo-key": { "material": "2B7E151628AED2A6ABF7158809CF4F3C" }

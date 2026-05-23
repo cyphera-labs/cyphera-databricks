@@ -5,20 +5,20 @@
 --      %scala
 --      io.cyphera.databricks.CypheraRegistrar.registerAll(spark)
 
--- Protect with a named policy (output is tagged)
+-- Protect with a named configuration (output is header-prefixed)
 SELECT cyphera_protect('ssn', '123-45-6789') AS protected_ssn;
 
--- Access — tag tells Cyphera which policy to use, no policy name needed
-SELECT cyphera_access_tag(cyphera_protect('ssn', '123-45-6789')) AS accessed_ssn;
+-- Access — the embedded header tells Cyphera which configuration to use; no name needed
+SELECT cyphera_access(cyphera_protect('ssn', '123-45-6789')) AS accessed_ssn;
 
--- Access with explicit policy name (for untagged values)
-SELECT cyphera_access('ssn', cyphera_protect('ssn', '123-45-6789')) AS accessed_ssn;
+-- Access with explicit configuration name (escape hatch for headerless configurations)
+SELECT cyphera_access_with_configuration('ssn', cyphera_protect('ssn', '123-45-6789')) AS accessed_ssn;
 
 -- Round-trip proof
 SELECT
     '123-45-6789' AS original,
     cyphera_protect('ssn', '123-45-6789') AS protected,
-    cyphera_access_tag(cyphera_protect('ssn', '123-45-6789')) AS accessed;
+    cyphera_access(cyphera_protect('ssn', '123-45-6789')) AS accessed;
 
 -- Bulk example
 SELECT
